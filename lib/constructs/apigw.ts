@@ -25,14 +25,14 @@ export class ApigwConstruct extends Construct {
       deployOptions: {
         stageName: "api",
         tracingEnabled: true,
-        accessLogDestination: new apigw.LogGroupLogDestination(
-          new logs.LogGroup(this, `${props.projectName}-apigw-access-logs`, {
-            logGroupName: `/aws/apigateway/${props.projectName}-apigw-access-logs`,
-            retention: logs.RetentionDays.ONE_YEAR,
-            removalPolicy: cdk.RemovalPolicy.DESTROY,
-          })
-        ),
-        accessLogFormat: apigw.AccessLogFormat.jsonWithStandardFields(),
+        // accessLogDestination: new apigw.LogGroupLogDestination(
+        //   new logs.LogGroup(this, `${props.projectName}-apigw-access-logs`, {
+        //     logGroupName: `/aws/apigateway/${props.projectName}-apigw-access-logs`,
+        //     retention: logs.RetentionDays.ONE_YEAR,
+        //     removalPolicy: cdk.RemovalPolicy.DESTROY,
+        //   })
+        // ),
+        // accessLogFormat: apigw.AccessLogFormat.jsonWithStandardFields(),
       },
     });
 

@@ -31,6 +31,7 @@ export class LambdaConstruct extends Construct {
         functionName: `${props.projectName}-slack-events-handler-lambda`,
         entry: "src/lambda/slack-events-handler.ts",
         role: lambdaRole,
+        environment: {},
       }
     );
     this.slackEventsHandlerLambda = slackEventsHandlerLambda;
