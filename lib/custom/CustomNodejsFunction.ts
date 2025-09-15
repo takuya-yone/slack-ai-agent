@@ -50,6 +50,9 @@ export class CustomNodejsFunction extends node_lambda.NodejsFunction {
         removalPolicy: RemovalPolicy.DESTROY,
       }),
       architecture: lambda.Architecture.ARM_64,
+      bundling: {
+        bundleAwsSDK: true,
+      },
     });
   }
 }
