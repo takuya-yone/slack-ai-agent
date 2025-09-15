@@ -1,11 +1,4 @@
-import * as cdk from "aws-cdk-lib";
-import {
-  aws_iam as iam,
-  aws_lambda as lambda,
-  aws_lambda_nodejs as node_lambda,
-  aws_sqs as sqs,
-  aws_apigateway as apigw,
-} from "aws-cdk-lib";
+import { aws_iam as iam, aws_lambda as lambda } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { CustomNodejsFunction } from "../custom";
 
@@ -36,7 +29,7 @@ export class LambdaConstruct extends Construct {
       `${props.projectName}-slack-events-handler-lambda`,
       {
         functionName: `${props.projectName}-slack-events-handler-lambda`,
-        entry: "src/lambda/slack-events-handler-lambda.ts",
+        entry: "src/lambda/slack-events-handler.ts",
         role: lambdaRole,
       }
     );

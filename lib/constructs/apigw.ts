@@ -1,9 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import {
-  aws_iam as iam,
   aws_lambda as lambda,
-  aws_lambda_nodejs as node_lambda,
-  aws_sqs as sqs,
+  aws_logs as logs,
   aws_apigateway as apigw,
 } from "aws-cdk-lib";
 import { Construct } from "constructs";
@@ -17,15 +15,24 @@ export class ApigwConstruct extends Construct {
   constructor(scope: Construct, id: string, props: ApigwConstructProps) {
     super(scope, id);
 
-    const sampleQueue = new sqs.Queue(this, "sample-queue", {
-      queueName: "sample-queue",
-      visibilityTimeout: cdk.Duration.seconds(30),
-    });
+    // const sampleQueue = new sqs.Queue(this, "sample-queue", {
+    //   queueName: "sample-queue",
+    //   visibilityTimeout: cdk.Duration.seconds(30),
+    // });
 
     const restApi = new apigw.RestApi(this, `${props.projectName}-apigw`, {
       restApiName: `${props.projectName}-apigw`,
       deployOptions: {
-        stageName: "v1",
+        stageName: "api",
+        tracingEnabled: true,
+        accessLogDestination: new apigw.LogGroupLogDestination(
+          new logs.LogGroup(this, `${props.projectName}-apigw-access-logs`, {
+            logGroupName: `/aws/apigateway/${props.projectName}-apigw-access-logs`,
+            retention: logs.RetentionDays.ONE_YEAR,
+            removalPolicy: cdk.RemovalPolicy.DESTROY,
+          })
+        ),
+        accessLogFormat: apigw.AccessLogFormat.jsonWithStandardFields(),
       },
     });
 
